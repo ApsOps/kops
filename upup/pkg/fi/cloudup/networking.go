@@ -38,8 +38,13 @@ func usesCNI(c *api.Cluster) bool {
 		return true
 	}
 
+	if networkConfig.VXLAN != nil {
+		// VXLAN is currently krouton, which uses kubenet (and thus CNI)
+		return true
+	}
+
 	if networkConfig.CNI != nil {
-		// external: assume uses CNI
+		// CNI definitely uses CNI!
 		return true
 	}
 
